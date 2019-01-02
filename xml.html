@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+    function xmlLoader() {
+        $.ajax({
+            url: 'data.xml',
+            type: 'GET',
+            success: function(res) {
+                var dataXml = res;
+
+                var isbnData = $(dataXml).find('isbn');
+                $('#isbn').text( isbnData.text() );
+                
+                var dataArr = $(dataXml).find('character');
+
+                for(var i = 0;i < dataArr.length; i++)
+                {
+                    var obj = $(dataArr[i]);                    
+                    $('#showName').append('<li>' + obj.find('name').text() + '</li>');
+                    $('#showBorn').append('<li>' + obj.find('born').text() + '</li>');
+                    $('#showQualification').append('<li>' + obj.find('qualification').text() + '</li>');
+                }
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        xmlLoader();
+    });
+    </script>
+
+</head>
+
+<body>
+
+    <div id="data-wrap">
+        <h1>ISBN 출력</h1>
+        <div id="isbn"></div>
+
+        <h1>Name 출력</h1>
+        <ul id="showName"></ul>
+
+        <h1>Bone 출력</h1>
+        <ul id="showBorn"></ul>
+
+        <h1>Qualification 출력</h1>
+        <ul id="showQualification"></ul>
+
+    </div>
+    
+</body>
+
+</html>
